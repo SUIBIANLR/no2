@@ -152,4 +152,9 @@ public class Element {
 		if (e1.operator == '/')
 			Divide(e1, e2);
 	}
+	
+	public boolean isPrioritized(){
+		if(operator=='*'||operator=='/')return true;
+		return false;
+	}
 }
