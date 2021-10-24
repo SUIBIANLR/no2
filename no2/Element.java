@@ -4,10 +4,11 @@ public class Element {
 	int wholeNumber = 0;
 	int numerator = 0;
 	int denominator = 0;
-	String operator = "";
+	char operator = ' ';
+	int flag;
 	Element nextElement = null;
 
-	public Element(int wholeNumber, int numerator, int denominator, String operator) {
+	public Element(int wholeNumber, int numerator, int denominator, char operator) {
 		super();
 		this.wholeNumber = wholeNumber;
 		this.numerator = numerator;
@@ -100,20 +101,20 @@ public class Element {
 		e1.operator = e2.operator;
 		e1.nextElement = e2.nextElement;
 	}
-	
-	//元素除法
-	
-	public static void Divide(Element e1,Element e2) {
+
+	// 元素除法
+
+	public static void Divide(Element e1, Element e2) {
 		e1.numerator += e1.wholeNumber * e1.denominator;// 将带分数转化为假分数
 		e2.numerator += e2.wholeNumber * e2.denominator;// 将带分数转化为假分数
-		
-		//将除法运算转化为乘法运算
-		
-		e1.wholeNumber=e2.wholeNumber=0;
-		int temp=e2.numerator;
-		e2.numerator=e2.denominator;
-		e2.denominator=temp;
-		Multipy(e1,e2);
+
+		// 将除法运算转化为乘法运算
+
+		e1.wholeNumber = e2.wholeNumber = 0;
+		int temp = e2.numerator;
+		e2.numerator = e2.denominator;
+		e2.denominator = temp;
+		Multipy(e1, e2);
 	}
 	// 最大公因数算法
 
@@ -138,15 +139,17 @@ public class Element {
 		else if (numerator == 0)
 			System.out.print(wholeNumber);
 		else
-			System.out.print(wholeNumber + " " + numerator + "/" + denominator);
+			System.out.print(wholeNumber + "'" + numerator + "/" + denominator);
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Element e1 = new Element(7, 2, 3, "*");
-		Element e2 = new Element(3, 1, 2, "");
-		Multipy(e1, e2);
-		// System.out.println(b);
-		e1.print();
+	public static void Arithmetic(Element e1, Element e2) {
+		if (e1.operator == '+')
+			Add(e1, e2);
+		if (e1.operator == '-')
+			Sub(e1, e2);
+		if (e1.operator == '*')
+			Multipy(e1, e2);
+		if (e1.operator == '/')
+			Divide(e1, e2);
 	}
 }
