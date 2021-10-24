@@ -5,15 +5,26 @@ public class Element {
 	int numerator = 0;
 	int denominator = 0;
 	char operator = ' ';
-	int flag;
+	int flag=0;
 	Element nextElement = null;
-
+	
+	//无括号情况下构造函数
 	public Element(int wholeNumber, int numerator, int denominator, char operator) {
 		super();
 		this.wholeNumber = wholeNumber;
 		this.numerator = numerator;
 		this.denominator = denominator;
 		this.operator = operator;
+	}
+	
+	//右括号情况下构造函数
+	public Element(int wholeNumber, int numerator, int denominator, char operator,int flag) {
+		super();
+		this.wholeNumber = wholeNumber;
+		this.numerator = numerator;
+		this.denominator = denominator;
+		this.operator = operator;
+		this.flag=flag;
 	}
 
 	// 元素加法,结果放入e1中
@@ -143,18 +154,86 @@ public class Element {
 	}
 
 	public static void Arithmetic(Element e1, Element e2) {
+		
 		if (e1.operator == '+')
 			Add(e1, e2);
-		if (e1.operator == '-')
+		else if (e1.operator == '-')
 			Sub(e1, e2);
-		if (e1.operator == '*')
+		else if (e1.operator == '*')
 			Multipy(e1, e2);
-		if (e1.operator == '/')
+		else if (e1.operator == '/')
 			Divide(e1, e2);
 	}
+	
+	//判断符号是否是高优先级
 	
 	public boolean isPrioritized(){
 		if(operator=='*'||operator=='/')return true;
 		return false;
 	}
+	
+	//
+	public static Element ramdomElement(String type, int range) {  // 0 <= 结果 < range
+		  switch(type) {
+		  case "integer": case "INT":{  //生成整数
+		   if (range < 0) {
+		    return null;
+		   }
+		   int num = (int)(range * Math.random());
+		   return new Element(num, 0, 1, ' ');
+		  }
+		  case "true fraction": case "TF":{  //生成真分数
+		   if (range <= 0) {
+		    return null;
+		   }
+		   int denominator = (int)(range * Math.random() + 1);
+		   int numerator = (int)(range * Math.random());
+		   return new Element(0, numerator, denominator, ' ');
+		  }
+		  case "band fracrion": case "BF":{  //生成带分数
+		   if (range <= 0) {
+		    return null;
+		   }
+		   int num = (int)(range * Math.random());
+		   int denominator = (int)(range * Math.random() + 1);
+		   int numerator = (int)(range * Math.random());
+		   return new Element(num, numerator, denominator, ' ');
+		  }
+		  default:
+		   return null;
+		  } 
+		 }
+		 
+		 public void setOperator(char ch) {
+		  if(ch=='+' || ch=='-' || ch=='*' || ch=='/') {
+		   this.operator = ch;
+		   return;
+		  }
+		  else { return; }
+		 }
+		 
+		 public void randomOperator(char ch) {
+		  int num = (int)(4 * Math.random());
+		  switch(num) {
+		  case 0:
+		   this.setOperator('+');
+		   break;
+		   
+		  case 1:
+		   this.setOperator('-');
+		   break;
+		   
+		  case 2:
+		   this.setOperator('*');
+		   break;
+		  
+		  case 3:
+		   this.setOperator('/');
+		   break;
+		  
+		  default:{}
+		  }
+		  
+		  return;
+		 }
 }
